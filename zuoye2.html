@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+        .sou{
+            width: 140px;
+            height: 33px;
+        }
+        #memo{
+            width: 190px;
+            height: 40px;
+        }
+        .te{
+            width: 400px;
+            height: 185px;
+            border: 1px solid black;
+            padding: 8px;
+        }
+        .td{
+            background-color: #e7e4e4;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        .x{
+            margin-left: 370px;
+        }
+        #msg{
+            width: 350px;
+            margin-bottom: 0px;
+        }
+        .d1{
+            width: 350px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="te">
+        <input id="memo" type="search" placeholder="请输入想查找的商品"/>
+        <button class="sou" onclick="saveStorage('memo');" />搜索</button><br>
+        <span>最近搜索</span>
+        <p id="msg"></p>
+        <button class="x" onclick="clearStorage('msg');" style="color:white;"/>X</button>
+    </div>
+
+</body>
+<script type="text/javascript">
+    function saveStorage(id) {
+        var data = document.getElementById(id).value;
+        for (var i =localStorage.length-1; i>=0; i--) {
+            var key = localStorage.key(i);
+            var value = localStorage.getItem(key);
+            if(value==data){
+                localStorage.removeItem(key);
+            }
+        }
+        var time = new Date().getTime();
+        localStorage.setItem(time, data);
+        loadStorage('msg');
+    }
+
+    function loadStorage(id) {
+        var result = '<div class="d1">';
+        for (var i =localStorage.length-1; i>=0; i--) {
+            var key = localStorage.key(i);
+            var value = localStorage.getItem(key);
+            result +='<div class="td">'+'&nbsp;'+value+'&nbsp;'+'</div>'+'&nbsp;&nbsp;';
+        }
+        result += '</div>';
+        var target = document.getElementById(id);
+        target.innerHTML = result;
+    }
+
+    function clearStorage() {
+        localStorage.clear();
+        loadStorage('msg');
+    }
+    window.onload=function(){
+        var result = '<div class="d1">';
+        for (var i =localStorage.length-1; i>=0; i--) {
+            var key = localStorage.key(i);
+            var value = localStorage.getItem(key);
+            result +='<div class="td">'+'&nbsp;'+value+'&nbsp;'+'</div>'+'&nbsp;&nbsp;';
+        }
+        result += '</div>';
+        var target = document.getElementById('msg');
+        target.innerHTML = result;
+    };
+</script>
+
+</html>
